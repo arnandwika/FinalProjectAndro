@@ -1,10 +1,10 @@
 package com.example.e_parking
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Toast
 import kotlinx.android.synthetic.main.activity_main.*
-import kotlinx.android.synthetic.main.home.*
 
 class MainActivity : AppCompatActivity() {
 
@@ -21,11 +21,15 @@ class MainActivity : AppCompatActivity() {
 
             }
             if(username == "admin" && password == "admin"){
-
-                setContentView(R.layout.home)
+                Toast.makeText(baseContext, "login berhasil", Toast.LENGTH_LONG).show()
+                val i = Intent(baseContext, Home_Activity::class.java)
+                startActivity(i)
+                //setContentView(R.layout.home)
             }else{
                 Toast.makeText(this, "Email atau Password Salah", Toast.LENGTH_LONG).show()
             }
         }
+
+
     }
 }
