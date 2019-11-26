@@ -61,7 +61,8 @@ class scan_Activity : AppCompatActivity() {
                             vibrator=applicationContext.getSystemService(Context.VIBRATOR_SERVICE) as Vibrator
                             vibrator.vibrate(1000)
                             text.setText(qrCodes.valueAt(0).displayValue)
-                            val i = Intent(baseContext, Pembayara_Activity::class.java)
+                            val i:Intent = Intent(baseContext, Pembayara_Activity::class.java)
+                            i.putExtra("data", qrCodes.valueAt(0).displayValue)
                             startActivity(i)
                         }
                     })
