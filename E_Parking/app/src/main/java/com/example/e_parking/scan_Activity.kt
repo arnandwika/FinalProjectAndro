@@ -31,7 +31,6 @@ class scan_Activity : AppCompatActivity() {
 
         surfaceview!!.holder!!.addCallback(object: SurfaceHolder.Callback {
             override fun surfaceChanged(p0: SurfaceHolder?, p1: Int, p2: Int, p3: Int) {
-
             }
 
             override fun surfaceDestroyed(p0: SurfaceHolder?) {
@@ -63,6 +62,9 @@ class scan_Activity : AppCompatActivity() {
                             text.setText(qrCodes.valueAt(0).displayValue)
                             val i = Intent(baseContext, Pembayara_Activity::class.java)
                             startActivity(i)
+                            finish()
+
+                            qrCodes.clear()
                         }
                     })
                 }
