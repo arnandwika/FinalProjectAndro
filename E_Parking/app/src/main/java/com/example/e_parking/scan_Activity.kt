@@ -63,6 +63,7 @@ class scan_Activity : AppCompatActivity() {
                             val i = Intent(baseContext, Pembayara_Activity::class.java)
                             startActivity(i)
                             finish()
+                            //test
 
                             qrCodes.clear()
                         }
