@@ -7,6 +7,8 @@ import android.graphics.Color
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.ImageView
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.database.*
 import com.google.zxing.*
 import com.google.zxing.common.BitMatrix
 import kotlinx.android.synthetic.main.activity_pembayara_.*
@@ -18,27 +20,44 @@ import java.time.format.FormatStyle
 class Pembayara_Activity : AppCompatActivity() {
     internal var bitmap:Bitmap?=null
     private var qr:ImageView?=null
-
+    val uid = FirebaseAuth.getInstance().currentUser!!.uid.toString()
+    val myRef: DatabaseReference = FirebaseDatabase.getInstance().getReference("booking/$uid")
+    var tempat =""
+    var jam =""
+    var username=""
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_pembayara_)
-//        var data: String =intent.getStringExtra("data")
 
-        qr=findViewById(R.id.qrcode) as ImageView
-        try{
-            val current = LocalDateTime.now()
-            val formatter = DateTimeFormatter.ofLocalizedDateTime(FormatStyle.SHORT)
-            val formatted = current.format(formatter)
-            txtData.text="Data: "+formatted
-            bitmap= TextToImageEncode(formatted)
-            qr!!.setImageBitmap(bitmap)
-        }catch (e: WriterException){
-            e.printStackTrace()
-        }
+        myRef.addValueEventListener(object: ValueEventListener {
+            override fun onCancelled(p0: DatabaseError) {
+
+            }
+
+            override fun onDataChange(datasnapshot: DataSnapshot) {
+                val code = datasnapshot.getValue(ModelQrcode::class.java)
+                tempat=code!!.id_tempat
+                jam=code!!.jam_masuk
+                username=code!!.user
+                var hasil= username+"\n"+tempat+"\n"+jam
+                qr=findViewById(R.id.qrcode) as ImageView
+                txtData.text=username+"\n"+tempat+"\n"+jam
+                try{
+                    val qrcode = hasil
+                    bitmap= TextToImageEncode(qrcode)
+                    qr!!.setImageBitmap(bitmap)
+                }catch (e: WriterException){
+                    e.printStackTrace()
+                }
+            }
+
+        })
+
 
         kembali.setOnClickListener {
             val i = Intent(baseContext, Home_Activity::class.java)
             startActivity(i)
+            finish()
         }
     }
     @Throws(WriterException::class)

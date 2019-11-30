@@ -16,12 +16,16 @@ import com.google.android.gms.vision.CameraSource
 import com.google.android.gms.vision.Detector
 import com.google.android.gms.vision.barcode.Barcode
 import com.google.android.gms.vision.barcode.BarcodeDetector
+import java.time.LocalDateTime
+import java.time.format.DateTimeFormatter
+import java.time.format.FormatStyle
 
 class scan_Activity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_scan_)
+        val user= intent.getStringExtra("user")
         val surfaceview: SurfaceView =findViewById(R.id.camerapreview)
         val text: TextView =findViewById(R.id.textView)
 
@@ -60,10 +64,17 @@ class scan_Activity : AppCompatActivity() {
                             val vibrator: Vibrator
                             vibrator=applicationContext.getSystemService(Context.VIBRATOR_SERVICE) as Vibrator
                             vibrator.vibrate(1000)
-                            text.setText(qrCodes.valueAt(0).displayValue)
+                            val kode = qrCodes.valueAt(0).displayValue
+                            val current = LocalDateTime.now()
+                            val formatter = DateTimeFormatter.ofPattern("yy-MM-dd HH:mm:ss")
+                            val formatted = current.format(formatter)
                             val i:Intent = Intent(baseContext, Pembayara_Activity::class.java)
-                            i.putExtra("data", qrCodes.valueAt(0).displayValue)
+                            i.putExtra("data", kode)
+                            i.putExtra("jam", formatted)
+                            i.putExtra("user",user)
+                            Firebase().connect(user,formatted,kode)
                             startActivity(i)
+                            finish()
                         }
                     })
                 }
