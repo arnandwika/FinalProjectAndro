@@ -4,6 +4,8 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Toast
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.database.*
 import kotlinx.android.synthetic.main.activity_home_.*
 
 
@@ -14,6 +16,18 @@ class Home_Activity : AppCompatActivity() {
         setContentView(R.layout.activity_home_)
         val user = intent.getStringExtra("user")
         Toast.makeText(baseContext, "masuk HOME", Toast.LENGTH_LONG).show()
+        val uid = FirebaseAuth.getInstance().currentUser!!.uid.toString()
+        val myRef: DatabaseReference = FirebaseDatabase.getInstance().getReference("pembayaran/$uid")
+        myRef.addValueEventListener(object : ValueEventListener{
+            override fun onCancelled(p0: DatabaseError) {
+            }
+
+            override fun onDataChange(datasnapshot: DataSnapshot) {
+                val hasil = datasnapshot.getValue(ClassSaldo::class.java)
+                txtSaldo.text="Rp "+hasil!!.saldo
+            }
+
+        })
 
         btnBayar.setOnClickListener {
            // Toast.makeText(baseContext, "berhasil Bayar", Toast.LENGTH_LONG).show()
@@ -29,6 +43,11 @@ class Home_Activity : AppCompatActivity() {
             i.putExtra("user", user)
             startActivity(i)
             finish()
+        }
+        imgTopUp.setOnClickListener {
+            val i = Intent(baseContext, TopUpActivity::class.java)
+
+            startActivity(i)
         }
     }
 }

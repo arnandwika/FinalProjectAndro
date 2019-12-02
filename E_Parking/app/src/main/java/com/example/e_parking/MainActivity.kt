@@ -37,6 +37,11 @@ class MainActivity : AppCompatActivity() {
                         Toast.makeText(baseContext, "Username atau password salah!", Toast.LENGTH_LONG).show()
                     }
             }
+            txtRegister.setOnClickListener {
+                val intent = Intent(baseContext, SignUpActivity::class.java)
+                startActivity(intent)
+                finish()
+            }
 //        }
 
 

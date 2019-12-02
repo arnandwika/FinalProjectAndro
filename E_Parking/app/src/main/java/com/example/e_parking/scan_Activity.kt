@@ -16,6 +16,8 @@ import com.google.android.gms.vision.CameraSource
 import com.google.android.gms.vision.Detector
 import com.google.android.gms.vision.barcode.Barcode
 import com.google.android.gms.vision.barcode.BarcodeDetector
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.database.FirebaseDatabase
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 import java.time.format.FormatStyle
@@ -25,7 +27,7 @@ class scan_Activity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_scan_)
-        val user= intent.getStringExtra("user")
+        val user= FirebaseAuth.getInstance().currentUser!!.uid.toString()
         val surfaceview: SurfaceView =findViewById(R.id.camerapreview)
         val text: TextView =findViewById(R.id.textView)
 
