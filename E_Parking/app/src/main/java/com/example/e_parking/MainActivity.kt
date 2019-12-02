@@ -52,9 +52,20 @@ class MainActivity : AppCompatActivity() {
                     Toast.makeText(this, "Email atau Password Salah", Toast.LENGTH_LONG).show()
                 }
             }
+<<<<<<< Updated upstream
         }
 
 
+=======
+
+            txtRegister.setOnClickListener{
+                val i= Intent(baseContext, SignUpActivity::class.java)
+                startActivity(i)
+                finish()
+
+            }
+//        }
+>>>>>>> Stashed changes
 
 
     }

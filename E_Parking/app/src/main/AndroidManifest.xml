@@ -2,8 +2,15 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.e_parking">
 
+<<<<<<< Updated upstream
     <uses-permission android:name="android.permission.CAMERA"></uses-permission>
     <uses-permission android:name="android.permission.VIBRATE"></uses-permission>
+=======
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.VIBRATE" />
+>>>>>>> Stashed changes
 
     <application
         android:allowBackup="true"
@@ -12,7 +19,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat.NoActionBar">
-        <activity android:name=".Pembayara_Activity"></activity>
+        <activity android:name=".SignUpActivity"></activity>
+        <activity android:name=".Pembayara_Activity" />
         <activity android:name=".Home_Activity" />
         <activity android:name=".scan_Activity" />
         <activity android:name=".MainActivity">
@@ -22,9 +30,10 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
         <meta-data
             android:name="com.google.android.gms.vision.DEPENDENCIES"
-            android:value="barcode"></meta-data>
+            android:value="barcode" />
     </application>
 
 </manifest>
